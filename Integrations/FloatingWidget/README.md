@@ -35,7 +35,7 @@ quit it and move **CodexBar Floating Widget.app** from `~/Applications` to the T
 
 ## Use the widget
 
-- Drag the handle along the top of the panel. The app remembers its position.
+- Drag anywhere on the widget to move it. The app remembers its position.
 - Right-click or Control-click the widget, or click the chart icon in the menu bar,
   to open its controls. Choose **Reload Usage** to check the server immediately.
   If the server is unavailable, the widget retries every ten seconds after each

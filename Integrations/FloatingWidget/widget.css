@@ -13,28 +13,16 @@
 body {
   margin: 0;
   overflow: hidden;
+  cursor: default;
+  -webkit-user-select: none;
   user-select: none;
-}
-
-.handle {
-  height: 14px;
-  display: grid;
-  place-items: center;
-}
-
-.handle::after {
-  content: "";
-  width: 26px;
-  height: 3px;
-  border-radius: 2px;
-  background: #58545e;
 }
 
 #cards {
   display: grid;
   grid-template-columns: repeat(var(--columns, 1), minmax(0, 1fr));
   gap: 4px;
-  padding: 0 4px 4px;
+  padding: 4px;
 }
 
 .card {

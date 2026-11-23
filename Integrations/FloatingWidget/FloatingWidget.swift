@@ -19,14 +19,12 @@ private final class FloatingPanel: NSPanel {
             NSMenu.popUpContextMenu(menu, with: event, for: contentView)
             return
         }
+        if event.type == .leftMouseDown {
+            // Keep left clicks from the web view so dragging anywhere moves the panel.
+            self.performDrag(with: event)
+            return
+        }
         super.sendEvent(event)
-    }
-}
-
-private final class DragHandle: NSView {
-    override func acceptsFirstMouse(for _: NSEvent?) -> Bool { true }
-    override func mouseDown(with event: NSEvent) {
-        self.window?.performDrag(with: event)
     }
 }
 
@@ -46,7 +44,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
     private var webReady = false
 
     private let panel = FloatingPanel(
-        contentRect: NSRect(x: 0, y: 0, width: 448, height: 162),
+        contentRect: NSRect(x: 0, y: 0, width: 448, height: 152),
         styleMask: [.borderless, .nonactivatingPanel],
         backing: .buffered,
         defer: false)
@@ -119,11 +117,6 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
         self.webView.autoresizingMask = [.width, .height]
         self.webView.navigationDelegate = self
         content.addSubview(self.webView)
-
-        let handle = DragHandle(frame: NSRect(
-            x: 0, y: content.bounds.height - 14, width: content.bounds.width, height: 14))
-        handle.autoresizingMask = [.width, .minYMargin]
-        content.addSubview(handle)
         self.panel.contentView = content
 
         if let page = Bundle.main.url(forResource: "index", withExtension: "html") {
@@ -180,7 +173,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
     }
 
     private func placePanel(at origin: NSPoint?) {
-        let size = NSSize(width: CGFloat(148 * self.cardCount + 4), height: 162)
+        let size = NSSize(width: CGFloat(148 * self.cardCount + 4), height: 152)
         let preferred = origin.map { NSRect(origin: $0, size: size) }
         let screen = preferred.flatMap { frame in
             NSScreen.screens.first { $0.frame.contains(NSPoint(x: frame.midX, y: frame.midY)) }
