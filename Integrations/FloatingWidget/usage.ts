@@ -1,12 +1,14 @@
 interface WindowReading {
   label: string;
   usedPercent: number | null;
+  displayPercent: number | null;
   resetAt: number | null;
 }
 
 interface ProviderCard {
   name: string;
   accent: string;
+  showUsed: boolean;
   rows: WindowReading[];
   extraRows: number;
   stale: boolean;
@@ -48,16 +50,22 @@ function resetCountdown(resetAt: number | null, now: number): string {
   return `${minutes}m`;
 }
 
-function quotaRow(raw: unknown): WindowReading | null {
+function finitePercent(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : null;
+}
+
+function quotaRow(raw: unknown, showUsed: boolean): WindowReading | null {
   const row = object(raw);
   if (!row || row.idle === true) return null;
-  const reported = row.usedPercent;
-  const usedPercent =
-    typeof reported === "number" && Number.isFinite(reported) ? Math.min(100, Math.max(0, reported)) : null;
+  const reportedUsed = finitePercent(row.usedPercent);
+  const reportedRemaining = finitePercent(row.remainingPercent);
+  const usedPercent = reportedUsed ?? (reportedRemaining === null ? null : 100 - reportedRemaining);
+  const remainingPercent = reportedRemaining ?? (usedPercent === null ? null : 100 - usedPercent);
   const name = label(row.label, "Usage");
   return {
     label: name === "Weekly" ? "Week" : name,
     usedPercent,
+    displayPercent: showUsed ? usedPercent : remainingPercent,
     resetAt: timestamp(row.resetAt),
   };
 }
@@ -65,6 +73,7 @@ function quotaRow(raw: unknown): WindowReading | null {
 function makeCards(snapshot: unknown, providerIDs: string[], now: number): ProviderCard[] | null {
   const root = object(snapshot);
   if (!root || root.schemaVersion !== 1 || !Array.isArray(root.providers)) return null;
+  const showUsed = object(root.host)?.usageBarsShowUsed === true;
 
   const timeout = root.staleAfterSeconds;
   const maxAge = (typeof timeout === "number" && timeout > 0 ? timeout : 180) * 1_000;
@@ -81,7 +90,7 @@ function makeCards(snapshot: unknown, providerIDs: string[], now: number): Provi
     const rows =
       provider?.enabled === true && Array.isArray(provider.windows)
         ? provider.windows.flatMap((raw: unknown) => {
-            const row = quotaRow(raw);
+            const row = quotaRow(raw, showUsed);
             return row ? [row] : [];
           })
         : [];
@@ -89,6 +98,7 @@ function makeCards(snapshot: unknown, providerIDs: string[], now: number): Provi
     const accent = object(provider?.display)?.accentColor;
     return {
       name: label(provider?.name, id),
+      showUsed,
       accent: Object.hasOwn(providerColors, id)
         ? providerColors[id]
         : typeof accent === "string" && /^#[0-9a-f]{6}$/i.test(accent)

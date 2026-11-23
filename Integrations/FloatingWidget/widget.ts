@@ -28,14 +28,17 @@ function renderCard(card: ProviderCard, now: number): HTMLElement {
   for (const row of card.rows) {
     const quota = element("div", "quota");
     const caption = element("div", "caption");
-    const used = row.usedPercent === null ? "—" : `${Math.round(row.usedPercent)}%`;
+    const percent = row.displayPercent === null ? "—" : `${Math.round(row.displayPercent)}%`;
+    const percentage = element("span", "percentage", percent);
+    if (row.displayPercent !== null)
+      percentage.append(element("span", "quota-mode", card.showUsed ? " used" : " left"));
     const name = element("span", "label", row.label);
     name.title = row.label;
-    caption.append(element("span", "percentage", used), name);
+    caption.append(percentage, name);
 
     const track = element("div", "track");
     const fill = element("div", "fill");
-    fill.style.width = `${row.usedPercent ?? 0}%`;
+    fill.style.width = `${row.displayPercent ?? 0}%`;
     if (row.usedPercent !== null && row.usedPercent >= 90) fill.classList.add("limit");
     const reset = resetCountdown(row.resetAt, now);
     const countdown = element("span", "countdown", reset);

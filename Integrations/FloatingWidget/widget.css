@@ -79,6 +79,11 @@ body {
   flex-shrink: 0;
 }
 
+.quota-mode {
+  color: #b5adbe;
+  font-size: 9px;
+}
+
 .label {
   overflow: hidden;
   color: #b5adbe;

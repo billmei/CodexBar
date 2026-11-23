@@ -65,6 +65,36 @@ test("uses selected order and the first two visible quota windows", () => {
   assert.equal(codex.stale, true);
 });
 
+test("uses the server bar-fill preference for the percentage and defaults to remaining", () => {
+  const rows = (host) => makeCards({ ...snapshot, host }, ["antigravity"], now)[0];
+  const used = rows({ usageBarsShowUsed: true });
+  const left = rows({ usageBarsShowUsed: false });
+  assert.equal(used.showUsed, true);
+  assert.equal(used.rows[0].displayPercent, 24);
+  assert.equal(left.showUsed, false);
+  assert.equal(left.rows[0].displayPercent, 76);
+  assert.equal(left.rows[0].usedPercent, 24);
+  assert.equal(rows(undefined).rows[0].displayPercent, 76);
+  assert.equal(makeCards(snapshot, ["codex"], now)[0].rows[0].displayPercent, 100);
+});
+
+test("uses remaining quota from the payload and derives consumption when needed", () => {
+  const [card] = makeCards(
+    {
+      ...snapshot,
+      providers: [
+        { id: "codex", enabled: true, windows: [{ usedPercent: 91, remainingPercent: 7 }, { remainingPercent: 8 }] },
+      ],
+    },
+    ["codex"],
+    now,
+  );
+  assert.equal(card.rows[0].displayPercent, 7);
+  assert.equal(card.rows[0].usedPercent, 91);
+  assert.equal(card.rows[1].displayPercent, 8);
+  assert.equal(card.rows[1].usedPercent, 92);
+});
+
 test("withdraws disabled providers and handles bad or incompatible snapshots", () => {
   const [disabled, missing] = makeCards(snapshot, ["private-provider", "claude"], now);
   assert.equal(disabled.rows.length, 0);
@@ -90,8 +120,10 @@ test("keeps reset-only and unavailable readings distinct from zero usage", () =>
     now,
   );
   assert.equal(card.rows[0].usedPercent, null);
+  assert.equal(card.rows[0].displayPercent, null);
   assert.equal(resetCountdown(card.rows[0].resetAt, now), "Reset due");
   assert.equal(card.rows[1].usedPercent, 100);
+  assert.equal(card.rows[1].displayPercent, 0);
   assert.equal(resetCountdown(card.rows[1].resetAt, now), "—");
   assert.equal(card.stale, true);
 });
