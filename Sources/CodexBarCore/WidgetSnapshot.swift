@@ -32,6 +32,8 @@ public struct WidgetSnapshot: Codable, Sendable {
         public let quotaOwnerKey: String?
         public let balanceText: String?
         public let details: [ProviderDetailSection]?
+        /// Lanes of model families with no usage, which `usageRows` omits. Only surfaces pinned to one family read it.
+        public let idleUsageRows: [WidgetUsageRowSnapshot]?
 
         public init(
             instanceID: ProviderInstanceID,
@@ -47,7 +49,8 @@ public struct WidgetSnapshot: Codable, Sendable {
             providerCost: ProviderCostSnapshot? = nil,
             quotaOwnerKey: String? = nil,
             balanceText: String? = nil,
-            details: [ProviderDetailSection]? = nil)
+            details: [ProviderDetailSection]? = nil,
+            idleUsageRows: [WidgetUsageRowSnapshot]? = nil)
         {
             self.provider = instanceID
             self.updatedAt = updatedAt
@@ -63,6 +66,7 @@ public struct WidgetSnapshot: Codable, Sendable {
             self.quotaOwnerKey = quotaOwnerKey
             self.balanceText = balanceText
             self.details = details
+            self.idleUsageRows = idleUsageRows
         }
 
         public init(
@@ -79,7 +83,8 @@ public struct WidgetSnapshot: Codable, Sendable {
             providerCost: ProviderCostSnapshot? = nil,
             quotaOwnerKey: String? = nil,
             balanceText: String? = nil,
-            details: [ProviderDetailSection]? = nil)
+            details: [ProviderDetailSection]? = nil,
+            idleUsageRows: [WidgetUsageRowSnapshot]? = nil)
         {
             self.init(
                 instanceID: provider.instanceID,
@@ -95,7 +100,8 @@ public struct WidgetSnapshot: Codable, Sendable {
                 providerCost: providerCost,
                 quotaOwnerKey: quotaOwnerKey,
                 balanceText: balanceText,
-                details: details)
+                details: details,
+                idleUsageRows: idleUsageRows)
         }
     }
 

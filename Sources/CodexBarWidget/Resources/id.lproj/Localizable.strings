@@ -24,6 +24,7 @@
 "30d cost" = "Biaya 30 hari";
 "4-hour quota" = "Kuota 4 jam";
 "5 hours" = "5j";
+"5-Hour" = "5j";
 "5-hour" = "5j";
 "5-hour quota" = "Kuota 5 jam";
 "5-hour usage" = "Penggunaan 5 jam";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "Pembakaran CodexBar Kuota (gabungan)";
 "CodexBar History" = "CodexBar Sejarah";
 "CodexBar Metric" = "CodexBar Metrik";
+"CodexBar Quota Card" = "Kartu Kuota CodexBar";
 "CodexBar Switcher" = "Pengalih CodexBar";
 "CodexBar Usage" = "Penggunaan CodexBar";
 "Compact widget for credits or cost." = "Widget ringkas untuk Kredit atau biaya.";
@@ -102,6 +104,7 @@
 "No data" = "Tidak ada data";
 "Not reported by %@" = "Tidak dilaporkan oleh %@";
 "On-demand" = "Penggunaan sesuai permintaan";
+"One provider's quota bars and reset countdowns." = "Bilah kuota dan hitung mundur reset satu penyedia.";
 "Open CodexBar" = "Buka CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Buka CodexBar untuk menyegarkan, atau edit widget ini untuk memilih akun lain.";
 "Overage" = "Kelebihan";
@@ -126,6 +129,7 @@
 "Refill" = "Isi ulang";
 "Remaining budget compared with an ideal steady burn rate." = "Anggaran yang tersisa dibandingkan dengan tingkat pembakaran stabil yang ideal.";
 "Requests" = "Permintaan";
+"Reset due" = "Saatnya reset";
 "Reset: %@" = "Atur Ulang: %@";
 "Resets %@" = "Reset %@";
 "Resets in" = "Menyetel ulang";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Widget penggunaan dengan pengalih penyedia.";
 "Usage window" = "Jendela penggunaan";
 "Voices" = "Suara";
+"Week" = "Minggu";
 "Weekly" = "Mingguan";
 "Weekly (7-day)" = "Mingguan (7 hari)";
 "Weekly Window" = "Jendela Mingguan";

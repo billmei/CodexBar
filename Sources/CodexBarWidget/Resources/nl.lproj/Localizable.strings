@@ -24,6 +24,7 @@
 "30d cost" = "30d kosten";
 "4-hour quota" = "4 uur Quotum";
 "5 hours" = "5u";
+"5-Hour" = "5u";
 "5-hour" = "5u";
 "5-hour quota" = "5 uur Quotum";
 "5-hour usage" = "5-uursgebruik";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar Quotum afbranden (gecombineerd)";
 "CodexBar History" = "CodexBar-geschiedenis";
 "CodexBar Metric" = "CodexBar Metriek";
+"CodexBar Quota Card" = "CodexBar-quotumkaart";
 "CodexBar Switcher" = "CodexBar-schakelaar";
 "CodexBar Usage" = "CodexBar-gebruik";
 "Compact widget for credits or cost." = "Compacte widget voor Kredieten of kosten.";
@@ -102,6 +104,7 @@
 "No data" = "Geen gegevens";
 "Not reported by %@" = "Niet gerapporteerd door %@";
 "On-demand" = "On-demand gebruik";
+"One provider's quota bars and reset countdowns." = "Quotumbalken en afteltijden tot de reset voor één provider.";
 "Open CodexBar" = "Open CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Open CodexBar om te vernieuwen of bewerk deze widget om een ander account te kiezen.";
 "Overage" = "Meerverbruik";
@@ -126,6 +129,7 @@
 "Refill" = "Bijvullen";
 "Remaining budget compared with an ideal steady burn rate." = "Resterend budget vergeleken met een ideale stabiele brandsnelheid.";
 "Requests" = "Verzoeken";
+"Reset due" = "Reset verwacht";
 "Reset: %@" = "Resetten: %@";
 "Resets %@" = "Reset %@";
 "Resets in" = "Reset binnen";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Gebruikswidget met een providerwisselaar.";
 "Usage window" = "Gebruiksvenster";
 "Voices" = "Stemmen";
+"Week" = "Week";
 "Weekly" = "Wekelijks";
 "Weekly (7-day)" = "Wekelijks (7 dagen)";
 "Weekly Window" = "Wekelijks venster";

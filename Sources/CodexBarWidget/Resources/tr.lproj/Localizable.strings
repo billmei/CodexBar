@@ -24,6 +24,7 @@
 "30d cost" = "30 günlük maliyet";
 "4-hour quota" = "4 saatlik Kota";
 "5 hours" = "5sa";
+"5-Hour" = "5sa";
 "5-hour" = "5sa";
 "5-hour quota" = "5 saatlik Kota";
 "5-hour usage" = "5 saatlik kullanım";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar Kota yanma (birleşik)";
 "CodexBar History" = "CodexBar Geçmişi";
 "CodexBar Metric" = "CodexBar Metrik";
+"CodexBar Quota Card" = "CodexBar Kota Kartı";
 "CodexBar Switcher" = "CodexBar Değiştirici";
 "CodexBar Usage" = "CodexBar kullanımı";
 "Compact widget for credits or cost." = "Krediler veya maliyet için kompakt widget.";
@@ -102,6 +104,7 @@
 "No data" = "Veri yok";
 "Not reported by %@" = "%@ tarafından bildirilmedi";
 "On-demand" = "İsteğe bağlı kullanım";
+"One provider's quota bars and reset countdowns." = "Tek bir sağlayıcının kota çubukları ve sıfırlama geri sayımları.";
 "Open CodexBar" = "CodexBar'yi açın";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Yenilemek için CodexBar'yi açın veya başka bir hesap seçmek için bu widget'ı düzenleyin.";
 "Overage" = "Aşım";
@@ -126,6 +129,7 @@
 "Refill" = "Yeniden doldurma";
 "Remaining budget compared with an ideal steady burn rate." = "İdeal sabit yazma hızıyla karşılaştırıldığında kalan bütçe.";
 "Requests" = "İstekler";
+"Reset due" = "Sıfırlama bekleniyor";
 "Reset: %@" = "Sıfırla: %@";
 "Resets %@" = "Sıfırlanma: %@";
 "Resets in" = "Sıfırlama süresi";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Sağlayıcı değiştiricili kullanım widget'ı.";
 "Usage window" = "Kullanım penceresi";
 "Voices" = "Sesler";
+"Week" = "Hafta";
 "Weekly" = "Haftalık";
 "Weekly (7-day)" = "Haftalık (7 günlük)";
 "Weekly Window" = "Haftalık Pencere";

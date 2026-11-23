@@ -2876,3 +2876,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo sta limitando la frequenza delle richieste. Riprova più tardi.";
 "MiMo request failed. Try refreshing later." = "La richiesta a MiMo non è riuscita. Riprova ad aggiornare più tardi.";
 "Skip cost refresh" = "Salta l’aggiornamento dei costi";
+"CodexBar Quota Card" = "Scheda quota CodexBar";
+"One provider's quota bars and reset countdowns." = "Barre della quota e conto alla rovescia del ripristino per un provider.";
+"5-Hour" = "5h";
+"Reset due" = "Ripristino in attesa";

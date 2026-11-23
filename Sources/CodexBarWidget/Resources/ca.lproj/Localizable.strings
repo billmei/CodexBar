@@ -24,6 +24,7 @@
 "30d cost" = "Cost 30 d";
 "4-hour quota" = "Quota de 4 hores";
 "5 hours" = "5h";
+"5-Hour" = "5h";
 "5-hour" = "5h";
 "5-hour quota" = "Quota de 5 hores";
 "5-hour usage" = "Ús de 5 hores";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "Reducció de quota CodexBar (combinada)";
 "CodexBar History" = "CodexBar Historial";
 "CodexBar Metric" = "CodexBar Mètrica";
+"CodexBar Quota Card" = "Targeta de quota de CodexBar";
 "CodexBar Switcher" = "Commutador CodexBar";
 "CodexBar Usage" = "Ús de CodexBar";
 "Compact widget for credits or cost." = "Giny compacte per a Crèdits o cost.";
@@ -102,6 +104,7 @@
 "No data" = "Sense dades";
 "Not reported by %@" = "No informat per %@";
 "On-demand" = "Ús sota demanda";
+"One provider's quota bars and reset countdowns." = "Barres de quota i comptes enrere de reinici d'un sol proveïdor.";
 "Open CodexBar" = "Obriu CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Obriu CodexBar per actualitzar o editeu aquest giny per triar un altre compte.";
 "Overage" = "Excedent";
@@ -126,6 +129,7 @@
 "Refill" = "Omplir";
 "Remaining budget compared with an ideal steady burn rate." = "Pressupost restant en comparació amb una taxa de combustió constant ideal.";
 "Requests" = "Sol·licituds";
+"Reset due" = "Reinici pendent";
 "Reset: %@" = "Restableix: %@";
 "Resets %@" = "Es reinicia %@";
 "Resets in" = "Es reinicia";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Giny d'ús amb un commutador de proveïdors.";
 "Usage window" = "Finestra d'ús";
 "Voices" = "Veus";
+"Week" = "Setmana";
 "Weekly" = "Setmanal";
 "Weekly (7-day)" = "Setmanal (7 dies)";
 "Weekly Window" = "Finestra setmanal";

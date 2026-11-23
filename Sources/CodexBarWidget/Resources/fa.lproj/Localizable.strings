@@ -24,6 +24,7 @@
 "30d cost" = "هزینه 30d";
 "4-hour quota" = "4 ساعته سهمیه";
 "5 hours" = "5س";
+"5-Hour" = "5س";
 "5-hour" = "5س";
 "5-hour quota" = "5 ساعته سهمیه";
 "5-hour usage" = "مصرف ۵ ساعته";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "سوختگی CodexBar سهمیه (ترکیبی)";
 "CodexBar History" = "تاریخچه CodexBar";
 "CodexBar Metric" = "CodexBar معیار";
+"CodexBar Quota Card" = "کارت سهمیه CodexBar";
 "CodexBar Switcher" = "سوئیچر CodexBar";
 "CodexBar Usage" = "استفاده از CodexBar";
 "Compact widget for credits or cost." = "ویجت فشرده برای اعتبارات یا هزینه.";
@@ -102,6 +104,7 @@
 "No data" = "داده ای وجود ندارد";
 "Not reported by %@" = "توسط %@ گزارش نشده است";
 "On-demand" = "استفاده بر حسب تقاضا";
+"One provider's quota bars and reset countdowns." = "نوارهای سهمیه و شمارش معکوس بازنشانی یک ارائه‌دهنده.";
 "Open CodexBar" = "CodexBar را باز کنید";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "CodexBar را برای بازخوانی باز کنید، یا این ویجت را ویرایش کنید تا حساب دیگری انتخاب کنید.";
 "Overage" = "اضافه هزینه";
@@ -126,6 +129,7 @@
 "Refill" = "دوباره پر کنید";
 "Remaining budget compared with an ideal steady burn rate." = "بودجه باقی مانده در مقایسه با نرخ سوزاندن ثابت ایده آل.";
 "Requests" = "درخواست ها";
+"Reset due" = "زمان بازنشانی رسیده";
 "Reset: %@" = "تنظیم مجدد: %@";
 "Resets %@" = "ریست %@";
 "Resets in" = "بازنشانی می شود";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "استفاده از ویجت با تغییر دهنده ارائه دهنده.";
 "Usage window" = "پنجره استفاده";
 "Voices" = "صداها";
+"Week" = "هفته";
 "Weekly" = "هفتگی";
 "Weekly (7-day)" = "هفتگی (7 روزه)";
 "Weekly Window" = "پنجره هفتگی";

@@ -2873,3 +2873,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo ограничивает частоту запросов. Повторите попытку позже.";
 "MiMo request failed. Try refreshing later." = "Запрос к MiMo не выполнен. Попробуйте обновить позже.";
 "Skip cost refresh" = "Пропустить обновление стоимости";
+"CodexBar Quota Card" = "Карточка квоты CodexBar";
+"One provider's quota bars and reset countdowns." = "Полосы квоты и обратный отсчёт до сброса для одного провайдера.";
+"5-Hour" = "5ч";
+"Reset due" = "Ожидается сброс";

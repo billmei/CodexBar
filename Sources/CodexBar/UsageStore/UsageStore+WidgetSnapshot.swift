@@ -358,7 +358,8 @@ extension UsageStore {
             providerCost: providerCost,
             quotaOwnerKey: snapshot != nil ? claudeQuotaOwnerKey : preservedClaudeUsage?.quotaOwnerKey,
             balanceText: balanceText,
-            details: snapshot.flatMap { $0.details.isEmpty ? nil : $0.details })
+            details: snapshot.flatMap { $0.details.isEmpty ? nil : $0.details },
+            idleUsageRows: snapshot.flatMap(Self.idleWidgetUsageRows(snapshot:)))
     }
 
     private func claudeWidgetQuotaOwnerKey() -> String {
@@ -589,8 +590,22 @@ extension UsageStore {
                 $0.id.hasPrefix(Self.antigravityCompactFallbackWindowIDPrefix) && $0.usageKnown
             }
         }
-        guard !visible.isEmpty else { return nil }
-        return visible.map { namedWindow in
+        return visible.isEmpty ? nil : Self.antigravityWidgetRows(windows: visible)
+    }
+
+    /// Untouched families stay out of `usageRows`, but a widget pinned to one still needs its reset times.
+    nonisolated static func idleWidgetUsageRows(
+        snapshot: UsageSnapshot) -> [WidgetSnapshot.WidgetUsageRowSnapshot]?
+    {
+        let idleIDs = AntigravityQuotaFamilyVisibility.idleWindowIDs(in: snapshot)
+        let idle = (snapshot.extraRateWindows ?? []).filter { idleIDs.contains($0.id) }
+        return idle.isEmpty ? nil : self.antigravityWidgetRows(windows: idle)
+    }
+
+    private nonisolated static func antigravityWidgetRows(
+        windows: [NamedRateWindow]) -> [WidgetSnapshot.WidgetUsageRowSnapshot]
+    {
+        windows.map { namedWindow in
             WidgetSnapshot.WidgetUsageRowSnapshot(
                 id: namedWindow.id,
                 title: namedWindow.title,

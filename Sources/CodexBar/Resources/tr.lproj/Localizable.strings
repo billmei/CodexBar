@@ -2875,3 +2875,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo istek sıklığını sınırlıyor. Daha sonra tekrar deneyin.";
 "MiMo request failed. Try refreshing later." = "MiMo isteği başarısız oldu. Daha sonra yeniden yenileyin.";
 "Skip cost refresh" = "Maliyet yenilemeyi atla";
+"CodexBar Quota Card" = "CodexBar Kota Kartı";
+"One provider's quota bars and reset countdowns." = "Tek bir sağlayıcının kota çubukları ve sıfırlama geri sayımları.";
+"5-Hour" = "5sa";
+"Reset due" = "Sıfırlama bekleniyor";

@@ -2864,3 +2864,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo 正在限制请求频率。请稍后重试。";
 "MiMo request failed. Try refreshing later." = "MiMo 请求失败。请稍后尝试刷新。";
 "Skip cost refresh" = "跳过费用刷新";
+"CodexBar Quota Card" = "CodexBar 配额卡片";
+"One provider's quota bars and reset countdowns." = "单个提供商的配额条和重置倒计时。";
+"5-Hour" = "5 小时";
+"Reset due" = "等待重置";

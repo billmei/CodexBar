@@ -24,6 +24,7 @@
 "30d cost" = "giá 30d";
 "4-hour quota" = "Hạn mức 4 giờ";
 "5 hours" = "5giờ";
+"5-Hour" = "5giờ";
 "5-hour" = "5giờ";
 "5-hour quota" = "Hạn mức 5 giờ";
 "5-hour usage" = "Mức sử dụng 5 giờ";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "Đốt cháy CodexBar Hạn mức (kết hợp)";
 "CodexBar History" = "Lịch sử CodexBar";
 "CodexBar Metric" = "CodexBar Chỉ số";
+"CodexBar Quota Card" = "Thẻ hạn mức CodexBar";
 "CodexBar Switcher" = "Bộ chuyển đổi CodexBar";
 "CodexBar Usage" = "Cách sử dụng CodexBar";
 "Compact widget for credits or cost." = "Tiện ích nhỏ gọn dành cho Tín dụng hoặc có giá thành.";
@@ -102,6 +104,7 @@
 "No data" = "Không có dữ liệu";
 "Not reported by %@" = "Không được báo cáo bởi %@";
 "On-demand" = "Sử dụng theo yêu cầu";
+"One provider's quota bars and reset countdowns." = "Thanh hạn mức và đếm ngược đặt lại của một nhà cung cấp.";
 "Open CodexBar" = "Mở CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Mở CodexBar để làm mới hoặc chỉnh sửa tiện ích này để chọn tài khoản khác.";
 "Overage" = "Vượt mức";
@@ -126,6 +129,7 @@
 "Refill" = "Nạp tiền";
 "Remaining budget compared with an ideal steady burn rate." = "Ngân sách còn lại so với tốc độ đốt ổn định lý tưởng.";
 "Requests" = "Yêu cầu";
+"Reset due" = "Đến hạn đặt lại";
 "Reset: %@" = "Đặt lại: %@";
 "Resets %@" = "Đặt lại %@";
 "Resets in" = "Đặt lại trong";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Tiện ích sử dụng với trình chuyển đổi nhà cung cấp.";
 "Usage window" = "Cửa sổ sử dụng";
 "Voices" = "Tiếng nói";
+"Week" = "Tuần";
 "Weekly" = "Hàng tuần";
 "Weekly (7-day)" = "Hàng tuần (7 ngày)";
 "Weekly Window" = "Cửa sổ hàng tuần";

@@ -478,6 +478,9 @@ struct UsageStoreWidgetSnapshotTests {
             "Gemini 5-hour",
             "Gemini weekly",
         ])
+        // Widgets pinned to the untouched family still receive its lanes.
+        #expect(entry.idleUsageRows?.map(\.title) == ["Claude/GPT 5-hour", "Claude/GPT weekly"])
+        #expect(entry.idleUsageRows?.compactMap(\.percentLeft) == [100, 100])
     }
 
     @Test

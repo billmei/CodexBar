@@ -2871,3 +2871,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo begränsar antalet förfrågningar. Försök igen senare.";
 "MiMo request failed. Try refreshing later." = "MiMo-förfrågan misslyckades. Försök uppdatera senare.";
 "Skip cost refresh" = "Hoppa över kostnadsuppdatering";
+"CodexBar Quota Card" = "CodexBar-kvotkort";
+"One provider's quota bars and reset countdowns." = "Kvotstaplar och nedräkning till återställning för en leverantör.";
+"5-Hour" = "5t";
+"Reset due" = "Återställning väntar";

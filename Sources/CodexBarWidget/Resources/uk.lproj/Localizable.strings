@@ -24,6 +24,7 @@
 "30d cost" = "Вартість 30д";
 "4-hour quota" = "4-годинна квота";
 "5 hours" = "5 год";
+"5-Hour" = "5 год";
 "5-hour" = "5 год";
 "5-hour quota" = "5-годинна квота";
 "5-hour usage" = "Використання за 5 годин";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar: темп вичерпання квоти (загальний)";
 "CodexBar History" = "Історія CodexBar";
 "CodexBar Metric" = "Показник CodexBar";
+"CodexBar Quota Card" = "Картка квоти CodexBar";
 "CodexBar Switcher" = "Перемикач CodexBar";
 "CodexBar Usage" = "Використання CodexBar";
 "Compact widget for credits or cost." = "Компактний віджет для кредитів або вартості.";
@@ -102,6 +104,7 @@
 "No data" = "Немає даних";
 "Not reported by %@" = "Не повідомляє %@";
 "On-demand" = "Використання за вимогою";
+"One provider's quota bars and reset countdowns." = "Смуги квоти та зворотний відлік до скидання для одного провайдера.";
 "Open CodexBar" = "Відкрити CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Відкрийте CodexBar, щоб оновити, або змініть цей віджет, щоб вибрати інший обліковий запис.";
 "Overage" = "Надлишок";
@@ -126,6 +129,7 @@
 "Refill" = "Поповнення";
 "Remaining budget compared with an ideal steady burn rate." = "Залишок бюджету порівняно з рівномірним очікуваним темпом витрат.";
 "Requests" = "Запити";
+"Reset due" = "Очікується скидання";
 "Reset: %@" = "Скидання: %@";
 "Resets %@" = "Скидання %@";
 "Resets in" = "Скидання через";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Віджет використання з перемикачем постачальників.";
 "Usage window" = "Вікно використання";
 "Voices" = "Голоси";
+"Week" = "Тиждень";
 "Weekly" = "Тижневий";
 "Weekly (7-day)" = "Тижневий (7 днів)";
 "Weekly Window" = "Тижневе вікно";

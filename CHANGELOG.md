@@ -2,6 +2,10 @@
 
 ## 0.85.1 — Unreleased
 
+### Added
+
+- Widgets: add CodexBar Quota Card, a small widget styled like the floating widget that shows one provider's quota bars and reset countdowns, with separate Antigravity Gemini and Claude / GPT cards.
+
 ## 0.85.0 — 2026-11-21
 
 ### Highlights

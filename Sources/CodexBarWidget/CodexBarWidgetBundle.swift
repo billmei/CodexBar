@@ -12,6 +12,7 @@ struct CodexBarWidgetBundle: WidgetBundle {
         CodexBarCombinedBurnDownWidget()
         CodexBarAccountUsageWidget()
         CodexBarAccountsWidget()
+        CodexBarQuotaCardWidget()
     }
 }
 

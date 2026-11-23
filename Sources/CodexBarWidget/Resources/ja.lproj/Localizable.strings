@@ -24,6 +24,7 @@
 "30d cost" = "過去30日間のコスト";
 "4-hour quota" = "4時間 クォータ";
 "5 hours" = "5時間";
+"5-Hour" = "5時間";
 "5-hour" = "5時間";
 "5-hour quota" = "5時間 クォータ";
 "5-hour usage" = "5時間の使用量";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar クォータ バーンダウン（複合）";
 "CodexBar History" = "CodexBarの歴史";
 "CodexBar Metric" = "CodexBar 指標";
+"CodexBar Quota Card" = "CodexBar クォータカード";
 "CodexBar Switcher" = "CodexBar スイッチャー";
 "CodexBar Usage" = "CodexBarの使用法";
 "Compact widget for credits or cost." = "クレジット またはコストのコンパクトなウィジェット。";
@@ -102,6 +104,7 @@
 "No data" = "データなし";
 "Not reported by %@" = "%@ では報告されていません";
 "On-demand" = "オンデマンドでの使用";
+"One provider's quota bars and reset countdowns." = "1 つのプロバイダーのクォータバーとリセットまでのカウントダウン。";
 "Open CodexBar" = "CodexBarを開く";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "CodexBar を開いて更新するか、このウィジェットを編集して別のアカウントを選択します。";
 "Overage" = "超過分";
@@ -126,6 +129,7 @@
 "Refill" = "リフィル";
 "Remaining budget compared with an ideal steady burn rate." = "理想的な安定した燃焼速度と比較した残りの予算。";
 "Requests" = "リクエスト";
+"Reset due" = "リセット予定時刻";
 "Reset: %@" = "リセット: %@";
 "Resets %@" = "%@ にリセット";
 "Resets in" = "でリセットします";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "プロバイダースイッチャーを使用した使用状況ウィジェット。";
 "Usage window" = "利用窓口";
 "Voices" = "声";
+"Week" = "週";
 "Weekly" = "週間";
 "Weekly (7-day)" = "毎週（7日間）";
 "Weekly Window" = "毎週のウィンドウ";

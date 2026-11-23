@@ -2876,3 +2876,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo تعداد درخواست‌ها را محدود کرده است. بعداً دوباره امتحان کنید.";
 "MiMo request failed. Try refreshing later." = "درخواست MiMo ناموفق بود. بعداً دوباره تازه‌سازی کنید.";
 "Skip cost refresh" = "رد کردن به‌روزرسانی هزینه";
+"CodexBar Quota Card" = "کارت سهمیه CodexBar";
+"One provider's quota bars and reset countdowns." = "نوارهای سهمیه و شمارش معکوس بازنشانی یک ارائه‌دهنده.";
+"5-Hour" = "5س";
+"Reset due" = "زمان بازنشانی رسیده";

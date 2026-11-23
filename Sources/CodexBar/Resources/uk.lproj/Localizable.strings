@@ -2873,3 +2873,7 @@
 "MiMo is rate limiting requests. Try again later." = "MiMo обмежує частоту запитів. Спробуйте пізніше.";
 "MiMo request failed. Try refreshing later." = "Запит до MiMo не виконано. Спробуйте оновити пізніше.";
 "Skip cost refresh" = "Пропустити оновлення вартості";
+"CodexBar Quota Card" = "Картка квоти CodexBar";
+"One provider's quota bars and reset countdowns." = "Смуги квоти та зворотний відлік до скидання для одного провайдера.";
+"5-Hour" = "5 год";
+"Reset due" = "Очікується скидання";

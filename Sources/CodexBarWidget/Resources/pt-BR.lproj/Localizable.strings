@@ -24,6 +24,7 @@
 "30d cost" = "Custo 30 d";
 "4-hour quota" = "Cota de 4 horas";
 "5 hours" = "5h";
+"5-Hour" = "5h";
 "5-hour" = "5h";
 "5-hour quota" = "Cota de 5 horas";
 "5-hour usage" = "Uso de 5 horas";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar Cota burn-down (combinado)";
 "CodexBar History" = "História CodexBar";
 "CodexBar Metric" = "CodexBar Métrica";
+"CodexBar Quota Card" = "Cartão de cota do CodexBar";
 "CodexBar Switcher" = "Comutador CodexBar";
 "CodexBar Usage" = "Uso de CodexBar";
 "Compact widget for credits or cost." = "Widget compacto para Créditos ou custo.";
@@ -102,6 +104,7 @@
 "No data" = "Sem dados";
 "Not reported by %@" = "Não relatado por %@";
 "On-demand" = "Uso sob demanda";
+"One provider's quota bars and reset countdowns." = "Barras de cota e contagens regressivas de redefinição de um provedor.";
 "Open CodexBar" = "Abra CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Abra CodexBar para atualizar ou edite este widget para escolher outra conta.";
 "Overage" = "Excedente";
@@ -126,6 +129,7 @@
 "Refill" = "Reabastecer";
 "Remaining budget compared with an ideal steady burn rate." = "Orçamento restante comparado com uma taxa de consumo constante ideal.";
 "Requests" = "Requisições";
+"Reset due" = "Redefinição pendente";
 "Reset: %@" = "Redefinir: %@";
 "Resets %@" = "Renova %@";
 "Resets in" = "Reinicia em";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Widget de uso com alternador de provedor.";
 "Usage window" = "Janela de uso";
 "Voices" = "Vozes";
+"Week" = "Semana";
 "Weekly" = "Semanal";
 "Weekly (7-day)" = "Semanalmente (7 dias)";
 "Weekly Window" = "Janela Semanal";

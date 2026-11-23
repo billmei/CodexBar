@@ -46,10 +46,31 @@ Persistence must finish before requesting a timeline reload. Failed attempts ret
 - **CodexBar Metric** (`CodexBarCompactWidget`): credits/today-cost/Cost widget, small only. **Cost** follows the app's [reporting period](cost-reporting-periods.md), including month-to-date and all available history; the period label travels with the snapshot.
 - **CodexBar Burn Down** (`CodexBarBurnDownWidget`): configurable quota burn-down chart, medium only.
 - **CodexBar Burn Down (Combined)** (`CodexBarCombinedBurnDownWidget`): two quota burn-down charts, medium only.
+- **CodexBar Quota Card** (`CodexBarQuotaCardWidget`): one provider card styled like the floating widget (`Integrations/FloatingWidget`), small only.
 
 Switcher widgets share one remembered provider selection, so switching one updates all Switcher widgets. To keep Claude and Codex visible side by side, add two **CodexBar Usage** widgets and configure each widget's **Provider** separately. Usage widgets read their own configured provider instead of the shared Switcher selection.
 
 Switching providers saves the selection before requesting a reload of the Switcher kind. Other widget kinds keep their own provider selections and timelines; paging the Switcher does not request a reload for them.
+
+## Quota Card
+
+Add one **CodexBar Quota Card** per card you want, then choose its **Provider** in Edit Widget. The picker lists
+enabled providers with quota windows in the latest snapshot. Antigravity offers separate **Gemini** and
+**Claude / GPT** cards when it reports those families; a plain **Antigravity** card appears only for windows
+outside them. A new widget starts on the first available card. A saved choice never moves to another provider.
+
+Each card shows the first two quota windows with the percentage, a bar, and a two-unit countdown such as `4h 52m`,
+plus **+N more** for the rest. Percentages and bars follow **Usage bars fill**, and a bar turns red at 90% used.
+**Reset due** means the reported reset time has passed. Cards keep a dark surface in both system appearances and
+use the floating widget's accents for Claude, Codex, and Antigravity; a custom provider color takes precedence.
+Tinted and clear appearances use neutral bars so the countdown stays readable.
+
+The widget reads the shared snapshot, so it needs no HTTP server. Timelines contain one entry per minute until
+the next scheduled reload to keep countdowns moving; every entry carries the same measurement.
+
+Antigravity families with no usage stay out of `usageRows`. The snapshot lists them in the optional
+`idleUsageRows` field, which only family-pinned cards read, so a Claude / GPT card keeps its reset times at zero
+usage. Older readers ignore the field, and snapshots without it remain readable.
 
 ## Account selection
 
@@ -187,7 +208,8 @@ upgrade testing and is not guaranteed here.
 `reloadAllTimelines()` requests an update; it does not confirm that `chronod` accepted the
 rendered timeline. An extension-side success log can therefore coexist with
 `CHSErrorDomain` 1050 (`timelineReloadFailed`), as reported in #3339. Current providers emit
-one timeline entry and request the next update 5–30 minutes later (30 minutes for Metric).
+one timeline entry (Quota Card emits one per minute) and request the next update 5–30 minutes later
+(30 minutes for Metric).
 Expired reset dates do not schedule a reload in the past. The snapshot reader does not
 impose a byte limit, so a problematic payload still needs to be examined before ruling
 out resource pressure.

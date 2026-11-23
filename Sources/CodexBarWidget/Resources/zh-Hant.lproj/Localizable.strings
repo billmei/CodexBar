@@ -24,6 +24,7 @@
 "30d cost" = "近 30 天費用";
 "4-hour quota" = "4 小時額度";
 "5 hours" = "5 小時";
+"5-Hour" = "5小時";
 "5-hour" = "5小時";
 "5-hour quota" = "5 小時額度";
 "5-hour usage" = "5 小時用量";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar 額度消耗趨勢（組合）";
 "CodexBar History" = "CodexBar 歷史記錄";
 "CodexBar Metric" = "CodexBar 指標";
+"CodexBar Quota Card" = "CodexBar 配額卡片";
 "CodexBar Switcher" = "CodexBar切換器";
 "CodexBar Usage" = "CodexBar 用量";
 "Compact widget for credits or cost." = "緊湊顯示額度或費用的小工具。";
@@ -102,6 +104,7 @@
 "No data" = "無資料";
 "Not reported by %@" = "%@ 未報告";
 "On-demand" = "按需使用";
+"One provider's quota bars and reset countdowns." = "單一提供者的配額條和重置倒數計時。";
 "Open CodexBar" = "開啟CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "開啟 CodexBar 進行刷新，或編輯此小工具以選擇另一個帳戶。";
 "Overage" = "超額";
@@ -126,6 +129,7 @@
 "Refill" = "補充額度";
 "Remaining budget compared with an ideal steady burn rate." = "比較剩餘額度與理想的均勻使用速度。";
 "Requests" = "請求";
+"Reset due" = "等待重置";
 "Reset: %@" = "重置：%@";
 "Resets %@" = "%@ 重置";
 "Resets in" = "距離重置";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "可切換提供商的用量小工具。";
 "Usage window" = "配額週期";
 "Voices" = "語音";
+"Week" = "週";
 "Weekly" = "每週";
 "Weekly (7-day)" = "每週（7 天）";
 "Weekly Window" = "每週視窗";

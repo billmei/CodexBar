@@ -24,6 +24,7 @@
 "30d cost" = "30 Tage Kosten";
 "4-hour quota" = "4 Stunden Kontingent";
 "5 hours" = "5Std";
+"5-Hour" = "5Std";
 "5-hour" = "5Std";
 "5-hour quota" = "5 Stunden Kontingent";
 "5-hour usage" = "5-Stunden-Nutzung";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar Kontingent Abbrand (kombiniert)";
 "CodexBar History" = "CodexBar Geschichte";
 "CodexBar Metric" = "CodexBar Kennzahl";
+"CodexBar Quota Card" = "CodexBar-Kontingentkarte";
 "CodexBar Switcher" = "CodexBar Umschalter";
 "CodexBar Usage" = "CodexBar-Nutzung";
 "Compact widget for credits or cost." = "Kompaktes Widget für Credits oder Kosten.";
@@ -102,6 +104,7 @@
 "No data" = "Keine Daten";
 "Not reported by %@" = "Nicht gemeldet von %@";
 "On-demand" = "On-Demand-Nutzung";
+"One provider's quota bars and reset countdowns." = "Kontingentbalken und Reset-Countdowns eines Anbieters.";
 "Open CodexBar" = "Öffnen Sie CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Öffnen Sie CodexBar zum Aktualisieren oder bearbeiten Sie dieses Widget, um ein anderes Konto auszuwählen.";
 "Overage" = "Überschreitung";
@@ -126,6 +129,7 @@
 "Refill" = "Nachfüllen";
 "Remaining budget compared with an ideal steady burn rate." = "Verbleibendes Budget im Vergleich zu einer idealen konstanten Brennrate.";
 "Requests" = "Anfragen";
+"Reset due" = "Reset fällig";
 "Reset: %@" = "Zurücksetzen: %@";
 "Resets %@" = "Setzt %@ zurück";
 "Resets in" = "Wird zurückgesetzt";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Nutzungs-Widget mit Anbieterwechsel.";
 "Usage window" = "Nutzungsfenster";
 "Voices" = "Stimmen";
+"Week" = "Woche";
 "Weekly" = "Wöchentlich";
 "Weekly (7-day)" = "Wöchentlich (7 Tage)";
 "Weekly Window" = "Wöchentliches Fenster";

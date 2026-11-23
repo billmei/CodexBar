@@ -24,6 +24,7 @@
 "30d cost" = "Kostnad 30 d";
 "4-hour quota" = "4-timmars Kvot";
 "5 hours" = "5t";
+"5-Hour" = "5t";
 "5-hour" = "5t";
 "5-hour quota" = "5-timmars Kvot";
 "5-hour usage" = "5-timmarsanvändning";
@@ -59,6 +60,7 @@
 "CodexBar Burn Down (Combined)" = "CodexBar Kvot nedbränning (kombinerad)";
 "CodexBar History" = "CodexBar Historik";
 "CodexBar Metric" = "CodexBar Mått";
+"CodexBar Quota Card" = "CodexBar-kvotkort";
 "CodexBar Switcher" = "CodexBar Switcher";
 "CodexBar Usage" = "CodexBar användning";
 "Compact widget for credits or cost." = "Kompakt widget för Krediter eller kostnad.";
@@ -102,6 +104,7 @@
 "No data" = "Inga data";
 "Not reported by %@" = "Inte rapporterad av %@";
 "On-demand" = "Användning på begäran";
+"One provider's quota bars and reset countdowns." = "Kvotstaplar och nedräkning till återställning för en leverantör.";
 "Open CodexBar" = "Öppna CodexBar";
 "Open CodexBar to refresh, or edit this widget to choose another account." = "Öppna CodexBar för att uppdatera, eller redigera den här widgeten för att välja ett annat konto.";
 "Overage" = "Överförbrukning";
@@ -126,6 +129,7 @@
 "Refill" = "Påfyllning";
 "Remaining budget compared with an ideal steady burn rate." = "Återstående budget jämfört med en idealisk jämn förbränningshastighet.";
 "Requests" = "Förfrågningar";
+"Reset due" = "Återställning väntar";
 "Reset: %@" = "Återställ: %@";
 "Resets %@" = "Återställs %@";
 "Resets in" = "Återställs in";
@@ -172,6 +176,7 @@
 "Usage widget with a provider switcher." = "Användningswidget med en leverantörsväxlare.";
 "Usage window" = "Användningsfönster";
 "Voices" = "Röster";
+"Week" = "Vecka";
 "Weekly" = "Vecka";
 "Weekly (7-day)" = "Varje vecka (7 dagar)";
 "Weekly Window" = "Veckofönster";
