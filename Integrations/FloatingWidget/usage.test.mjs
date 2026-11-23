@@ -50,7 +50,9 @@ const snapshot = {
 };
 
 test("uses selected order and the first two visible quota windows", () => {
-  const [anti, codex] = makeCards(snapshot, ["antigravity", "codex"], now);
+  const cards = makeCards(snapshot, ["antigravity", "codex"], now);
+  assert.equal(cards.length, 2);
+  const [anti, codex] = cards;
   assert.equal(anti.name, "Antigravity");
   assert.equal(anti.rows.length, 2);
   assert.equal(anti.rows[0].label, "Claude / GPT");
@@ -63,6 +65,57 @@ test("uses selected order and the first two visible quota windows", () => {
   assert.equal(codex.rows[0].label, "Week");
   assert.equal(codex.rows[0].usedPercent, 0);
   assert.equal(codex.stale, true);
+});
+
+test("shows separate Antigravity cards, keeping the Claude/GPT pair visible at zero usage", () => {
+  const window = (bucket, label, usedPercent, resetAt, idle = false) => ({
+    kind: `antigravity-quota-summary-${bucket}`,
+    label,
+    usedPercent,
+    resetAt,
+    idle,
+  });
+  const sessionReset = "2026-07-16T15:30:00Z";
+  const weeklyReset = "2026-07-20T08:00:00Z";
+  const antigravity = {
+    id: "antigravity",
+    name: "Antigravity",
+    enabled: true,
+    windows: [
+      window("3p-weekly", "Claude/GPT weekly", 0, weeklyReset, true),
+      window("gemini-5h", "Gemini 5-hour", 10, "2026-07-16T16:26:00Z"),
+      window("gemini-weekly", "Gemini weekly", 25, "2026-07-21T15:00:00Z"),
+      window("3p-5h", "Claude/GPT 5-hour", 0, sessionReset, true),
+    ],
+  };
+  const cards = makeCards({ ...snapshot, providers: [antigravity] }, ["claude", "codex", "antigravity"], now);
+  assert.equal(cards.length, 4);
+  const [, , gemini, claude] = cards;
+  assert.equal(gemini.name, "Antigravity");
+  assert.equal(gemini.family, "Gemini");
+  assert.equal(gemini.rows[0].label, "5-hour");
+  assert.equal(gemini.rows[0].usedPercent, 10);
+  assert.equal(gemini.rows[1].usedPercent, 25);
+  assert.equal(gemini.extraRows, 0);
+  assert.equal(claude.family, "Claude / GPT");
+  assert.equal(claude.rows[0].label, "5-hour");
+  assert.equal(claude.rows[0].displayPercent, 100);
+  assert.equal(claude.rows[0].resetAt, Date.parse(sessionReset));
+  assert.equal(claude.rows[1].label, "Week");
+  assert.equal(claude.rows[1].resetAt, Date.parse(weeklyReset));
+});
+
+test("uses the Antigravity bucket ID to keep a lone Claude window off the Gemini card", () => {
+  const provider = {
+    id: "antigravity",
+    enabled: true,
+    windows: [{ kind: "antigravity-quota-summary-third-party-session", label: "Gemini 5-hour", usedPercent: 48 }],
+  };
+  const cards = makeCards({ ...snapshot, providers: [provider] }, ["antigravity"], now);
+  assert.equal(cards.length, 1);
+  assert.equal(cards[0].family, "Claude / GPT");
+  assert.equal(cards[0].rows[0].label, "5-hour");
+  assert.equal(cards[0].rows[0].usedPercent, 48);
 });
 
 test("uses the server bar-fill preference for the percentage and defaults to remaining", () => {

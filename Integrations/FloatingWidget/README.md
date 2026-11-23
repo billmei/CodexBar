@@ -4,9 +4,10 @@ Keep compact usage cards over your work while another app has focus. The panel j
 your Spaces and can appear alongside full-screen apps. Each card shows the first two
 visible quota windows, a percentage, and time until reset. Bars and percentages
 follow CodexBar's **Usage bars fill** setting. It starts with Claude, Codex, and
-Antigravity.
+Antigravity. When Antigravity reports its Claude/GPT quota windows, they get a
+separate card for the 5-hour and weekly limits, including at zero usage.
 
-<img src="preview.png" alt="Sample usage cards for Claude, Codex, and Antigravity" width="448" />
+<img src="preview.png" alt="Sample cards for Claude, Codex, Antigravity Gemini, and Antigravity Claude/GPT" width="596" />
 
 The companion uses TypeScript for the widget and AppKit for the floating panel.
 Install it as a separate macOS app. CodexBar's **Settings → Plugins** installs

@@ -38,6 +38,8 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
     private let feed = DashboardFeed()
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private var providerIDs = FloatingWidget.defaultProviders
+    private var cardCount = FloatingWidget.defaultProviders.count
+    private var pageUpdate = 0
     private var refreshTask: Task<Void, Never>?
     private var rawSnapshot = ""
     private var status = "Loading usage…"
@@ -66,6 +68,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
 
     func applicationDidFinishLaunching(_: Notification) {
         self.providerIDs = self.defaults.stringArray(forKey: "ProviderIDs") ?? Self.defaultProviders
+        self.cardCount = self.providerIDs.count
         self.configurePanel()
         self.configureStatusItem()
         let saved = self.defaults.string(forKey: "PanelOrigin").map(NSPointFromString)
@@ -177,7 +180,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
     }
 
     private func placePanel(at origin: NSPoint?) {
-        let size = NSSize(width: CGFloat(148 * self.providerIDs.count + 4), height: 162)
+        let size = NSSize(width: CGFloat(148 * self.cardCount + 4), height: 162)
         let preferred = origin.map { NSRect(origin: $0, size: size) }
         let screen = preferred.flatMap { frame in
             NSScreen.screens.first { $0.frame.contains(NSPoint(x: frame.midX, y: frame.midY)) }
@@ -245,6 +248,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
                ids.allSatisfy({ $0.range(of: "^[a-z0-9][a-z0-9_-]*$", options: .regularExpression) != nil })
             {
                 self.providerIDs = ids
+                self.cardCount = ids.count
                 self.defaults.set(ids, forKey: "ProviderIDs")
                 self.placePanel(at: self.panel.frame.origin)
                 self.updatePage()
@@ -262,12 +266,21 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSW
 
     private func updatePage() {
         guard self.webReady else { return }
+        self.pageUpdate += 1
+        let pageUpdate = self.pageUpdate
         // Pass values as arguments so provider text never becomes JavaScript source.
         self.webView.callAsyncJavaScript(
-            "window.updateWidget(snapshot, providerIDs, status)",
+            "return window.updateWidget(snapshot, providerIDs, status)",
             arguments: ["snapshot": self.rawSnapshot, "providerIDs": self.providerIDs, "status": self.status],
             in: nil,
-            in: .page,
-            completionHandler: nil)
+            in: .page)
+        { [weak self] result in
+            guard let self, self.webReady, self.pageUpdate == pageUpdate,
+                  case let .success(value) = result,
+                  let count = value as? Int, count > 0, count != self.cardCount
+            else { return }
+            self.cardCount = count
+            self.placePanel(at: self.panel.frame.origin)
+        }
     }
 }

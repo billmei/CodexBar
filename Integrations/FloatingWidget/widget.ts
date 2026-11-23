@@ -18,7 +18,9 @@ function element<K extends keyof HTMLElementTagNameMap>(
 function renderCard(card: ProviderCard, now: number): HTMLElement {
   const panel = element("section", "card");
   panel.style.setProperty("--accent", card.accent);
-  panel.append(element("h2", "provider", card.name));
+  const heading = element("h2", "provider", card.name);
+  if (card.family) heading.append(" ", element("span", "provider-family", card.family));
+  panel.append(heading);
 
   if (card.rows.length === 0) {
     panel.append(element("p", "empty", card.status));
@@ -56,19 +58,20 @@ function renderCard(card: ProviderCard, now: number): HTMLElement {
   return panel;
 }
 
-function renderWidget(): void {
+function renderWidget(): number {
   const now = Date.now();
   const cards = message ? null : makeCards(snapshot, providerIDs, now);
   if (cards) {
     cardsElement.style.setProperty("--columns", String(cards.length));
     cardsElement.replaceChildren(...cards.map((card) => renderCard(card, now)));
-  } else {
-    cardsElement.style.setProperty("--columns", "1");
-    cardsElement.replaceChildren(element("p", "empty notice", message || "Usage feed is incompatible"));
+    return cards.length;
   }
+  cardsElement.style.setProperty("--columns", "1");
+  cardsElement.replaceChildren(element("p", "empty notice", message || "Usage feed is incompatible"));
+  return 0;
 }
 
-function updateWidget(raw: string, ids: string[], status: string): void {
+function updateWidget(raw: string, ids: string[], status: string): number {
   providerIDs = ids;
   message = status;
   try {
@@ -76,7 +79,7 @@ function updateWidget(raw: string, ids: string[], status: string): void {
   } catch {
     snapshot = null;
   }
-  renderWidget();
+  return renderWidget();
 }
 
 renderWidget();
