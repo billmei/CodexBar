@@ -1,0 +1,142 @@
+:root {
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: #f5f1f8;
+  background: #111014;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+.handle {
+  height: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.handle::after {
+  content: "";
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: #58545e;
+}
+
+#cards {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 1), minmax(0, 1fr));
+  gap: 4px;
+  padding: 0 4px 4px;
+}
+
+.card {
+  min-width: 0;
+  height: 144px;
+  padding: 6px 10px 4px;
+  border-radius: 8px;
+  text-align: center;
+  background: color-mix(in srgb, var(--accent) 6%, #151317);
+}
+
+.provider {
+  margin: 0 0 5px;
+  overflow: hidden;
+  color: #c1b8c7;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quota + .quota {
+  margin-top: 6px;
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 7px;
+  min-width: 0;
+  margin: 0 0 3px;
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.percentage {
+  flex-shrink: 0;
+}
+
+.label {
+  overflow: hidden;
+  color: #b5adbe;
+  text-overflow: ellipsis;
+}
+
+.track {
+  position: relative;
+  height: 23px;
+  overflow: hidden;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent) 9%, #212025);
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.fill.limit {
+  background: #fb5b60;
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow:
+    0 1px 3px #000,
+    0 0 5px #000;
+}
+
+.empty,
+.footer {
+  color: #b5adbe;
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  min-height: 88px;
+  margin: 0;
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.notice {
+  min-height: 144px;
+}
+
+.footer {
+  margin: 4px 0 0;
+  font-size: 9px;
+  line-height: 11px;
+}
