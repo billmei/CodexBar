@@ -60,14 +60,15 @@ function finitePercent(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : null;
 }
 
-function quotaRow(row: Record<string, unknown>, showUsed: boolean): WindowReading {
+function quotaRow(row: Record<string, unknown>, showUsed: boolean, providerID: string): WindowReading {
   const reportedUsed = finitePercent(row.usedPercent);
   const reportedRemaining = finitePercent(row.remainingPercent);
   const usedPercent = reportedUsed ?? (reportedRemaining === null ? null : 100 - reportedRemaining);
   const remainingPercent = reportedRemaining ?? (usedPercent === null ? null : 100 - usedPercent);
   const name = label(row.label, "Usage");
+  const fiveHourSession = name === "Session" && (providerID === "claude" || providerID === "codex");
   return {
-    label: name === "Weekly" ? "Week" : name,
+    label: fiveHourSession ? "5-Hour" : name === "Weekly" ? "Week" : name,
     usedPercent,
     displayPercent: showUsed ? usedPercent : remainingPercent,
     resetAt: timestamp(row.resetAt),
@@ -92,7 +93,7 @@ function antigravityCardWindows(windows: Record<string, unknown>[]): CardWindows
       / (5-hour|weekly)$/.exec(title)?.[1] ?? /-(weekly|5h|5-hour|session|five-hour|five hour)$/.exec(bucket)?.[1];
     const geminiBucket = /^gemini-(weekly|5h|5-hour|session|five-hour|five hour)$/.test(bucket);
     const claudeBucket = /(?:^|-)(3p|third-party)(?:-|$)/.test(bucket);
-    const cadenceLabel = cadence === "weekly" ? "Weekly" : "5-hour";
+    const cadenceLabel = cadence === "weekly" ? "Weekly" : "5-Hour";
     if (bucket && cadence && !claudeBucket && (geminiBucket || /^gemini (5-hour|weekly)$/.test(title))) {
       gemini.push({ window, label: cadenceLabel });
     } else if (bucket && cadence && !bucket.includes("gemini") && (claudeBucket || /\b(claude|gpt)\b/.test(title))) {
@@ -152,7 +153,7 @@ function makeCards(snapshot: unknown, providerIDs: string[], now: number): Provi
       family,
       showUsed,
       accent,
-      rows: windows.slice(0, 2).map((window) => quotaRow(window, showUsed)),
+      rows: windows.slice(0, 2).map((window) => quotaRow(window, showUsed, id)),
       extraRows: Math.max(0, windows.length - 2),
       stale: windows.length > 0 && (measured === null || now - measured > maxAge || !!provider?.error),
       status: provider?.enabled === true ? "Usage unavailable" : "Provider unavailable",

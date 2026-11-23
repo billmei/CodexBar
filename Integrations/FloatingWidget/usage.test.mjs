@@ -67,6 +67,15 @@ test("uses selected order and the first two visible quota windows", () => {
   assert.equal(codex.stale, true);
 });
 
+test("labels Claude and Codex session windows as 5-Hour", () => {
+  const providerIDs = ["claude", "codex", "gemini"];
+  const providers = providerIDs.map((id) => ({ id, enabled: true, windows: [{ label: "Session", usedPercent: 5 }] }));
+  const [claude, codex, gemini] = makeCards({ ...snapshot, providers }, providerIDs, now);
+  assert.equal(claude.rows[0].label, "5-Hour");
+  assert.equal(codex.rows[0].label, "5-Hour");
+  assert.equal(gemini.rows[0].label, "Session");
+});
+
 test("shows separate Antigravity cards, keeping the Claude/GPT pair visible at zero usage", () => {
   const window = (bucket, label, usedPercent, resetAt, idle = false) => ({
     kind: `antigravity-quota-summary-${bucket}`,
@@ -93,12 +102,12 @@ test("shows separate Antigravity cards, keeping the Claude/GPT pair visible at z
   const [, , gemini, claude] = cards;
   assert.equal(gemini.name, "Antigravity");
   assert.equal(gemini.family, "Gemini");
-  assert.equal(gemini.rows[0].label, "5-hour");
+  assert.equal(gemini.rows[0].label, "5-Hour");
   assert.equal(gemini.rows[0].usedPercent, 10);
   assert.equal(gemini.rows[1].usedPercent, 25);
   assert.equal(gemini.extraRows, 0);
   assert.equal(claude.family, "Claude / GPT");
-  assert.equal(claude.rows[0].label, "5-hour");
+  assert.equal(claude.rows[0].label, "5-Hour");
   assert.equal(claude.rows[0].displayPercent, 100);
   assert.equal(claude.rows[0].resetAt, Date.parse(sessionReset));
   assert.equal(claude.rows[1].label, "Week");
@@ -114,7 +123,7 @@ test("uses the Antigravity bucket ID to keep a lone Claude window off the Gemini
   const cards = makeCards({ ...snapshot, providers: [provider] }, ["antigravity"], now);
   assert.equal(cards.length, 1);
   assert.equal(cards[0].family, "Claude / GPT");
-  assert.equal(cards[0].rows[0].label, "5-hour");
+  assert.equal(cards[0].rows[0].label, "5-Hour");
   assert.equal(cards[0].rows[0].usedPercent, 48);
 });
 
