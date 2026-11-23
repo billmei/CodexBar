@@ -9,6 +9,18 @@ private final class FloatingPanel: NSPanel {
     override var canBecomeMain: Bool {
         false
     }
+
+    override func sendEvent(_ event: NSEvent) {
+        let controlClick = event.type == .leftMouseDown && event.modifierFlags.contains(.control)
+        if event.type == .rightMouseDown || controlClick,
+           let contentView = self.contentView,
+           let menu = contentView.menu
+        {
+            NSMenu.popUpContextMenu(menu, with: event, for: contentView)
+            return
+        }
+        super.sendEvent(event)
+    }
 }
 
 private final class DragHandle: NSView {
@@ -20,13 +32,14 @@ private final class DragHandle: NSView {
 
 @main
 @MainActor
-final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNavigationDelegate {
+final class FloatingWidget: NSObject, NSApplicationDelegate, NSMenuDelegate, NSWindowDelegate, WKNavigationDelegate {
     private static let defaultProviders = ["claude", "codex", "antigravity"]
     private let defaults = UserDefaults.standard
     private let feed = DashboardFeed()
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    private let visibilityItem = NSMenuItem(title: "", action: #selector(toggleVisibility), keyEquivalent: "")
     private var providerIDs = FloatingWidget.defaultProviders
+    private var cardCount = FloatingWidget.defaultProviders.count
+    private var pageUpdate = 0
     private var refreshTask: Task<Void, Never>?
     private var rawSnapshot = ""
     private var status = "Loading usage…"
@@ -55,11 +68,17 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
 
     func applicationDidFinishLaunching(_: Notification) {
         self.providerIDs = self.defaults.stringArray(forKey: "ProviderIDs") ?? Self.defaultProviders
+        self.cardCount = self.providerIDs.count
         self.configurePanel()
-        self.configureMenu()
+        self.configureStatusItem()
         let saved = self.defaults.string(forKey: "PanelOrigin").map(NSPointFromString)
         self.placePanel(at: saved)
-        self.showPanel()
+        self.reloadUsage()
+    }
+
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows _: Bool) -> Bool {
+        if !self.panel.isVisible { self.reloadUsage() }
+        return false
     }
 
     func applicationDidChangeScreenParameters(_: Notification) {
@@ -92,6 +111,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
         self.panel.hasShadow = true
 
         let content = NSView(frame: NSRect(origin: .zero, size: self.panel.frame.size))
+        content.menu = self.controlsMenu()
         content.wantsLayer = true
         content.layer?.cornerRadius = 12
         content.layer?.masksToBounds = true
@@ -111,29 +131,56 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
         }
     }
 
-    private func configureMenu() {
+    private func configureStatusItem() {
         let icon = NSImage(systemSymbolName: "chart.bar.xaxis", accessibilityDescription: self.panel.title)
         self.statusItem.button?.image = icon
         self.statusItem.button?.toolTip = self.panel.title
+        self.statusItem.menu = self.controlsMenu()
+        self.statusItem.isVisible = !self.defaults.bool(forKey: "MenuBarIconHidden")
+    }
 
+    private func controlsMenu() -> NSMenu {
         let menu = NSMenu()
-        self.visibilityItem.target = self
-        menu.addItem(self.visibilityItem)
-        let choose = NSMenuItem(title: "Choose Providers…", action: #selector(chooseProviders), keyEquivalent: "")
-        choose.target = self
-        menu.addItem(choose)
+        menu.delegate = self
+        self.menuNeedsUpdate(menu)
+        return menu
+    }
+
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        menu.removeAllItems()
+        let reload = menu.addItem(withTitle: "Reload Usage", action: #selector(self.reloadUsage), keyEquivalent: "")
+        reload.target = self
+        let visibility = menu.addItem(
+            withTitle: self.panel.isVisible ? "Hide Widget" : "Show Widget",
+            action: #selector(self.toggleVisibility),
+            keyEquivalent: "")
+        visibility.target = self
+        let providers = menu.addItem(
+            withTitle: "Choose Providers…",
+            action: #selector(self.chooseProviders),
+            keyEquivalent: "")
+        providers.target = self
+        let icon = menu.addItem(
+            withTitle: self.statusItem.isVisible ? "Hide Menu Bar Icon" : "Show Menu Bar Icon",
+            action: #selector(self.toggleMenuBarIcon),
+            keyEquivalent: "")
+        icon.target = self
         menu.addItem(.separator())
-        let quit = NSMenuItem(
-            title: "Quit Floating Widget",
+        let quit = menu.addItem(
+            withTitle: "Quit Floating Widget",
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q")
         quit.target = NSApp
-        menu.addItem(quit)
-        self.statusItem.menu = menu
+    }
+
+    @objc private func toggleMenuBarIcon() {
+        let shouldHide = self.statusItem.isVisible
+        self.defaults.set(shouldHide, forKey: "MenuBarIconHidden")
+        self.statusItem.isVisible = !shouldHide
     }
 
     private func placePanel(at origin: NSPoint?) {
-        let size = NSSize(width: CGFloat(148 * self.providerIDs.count + 4), height: 162)
+        let size = NSSize(width: CGFloat(148 * self.cardCount + 4), height: 162)
         let preferred = origin.map { NSRect(origin: $0, size: size) }
         let screen = preferred.flatMap { frame in
             NSScreen.screens.first { $0.frame.contains(NSPoint(x: frame.midX, y: frame.midY)) }
@@ -146,25 +193,25 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
         self.panel.setFrame(NSRect(origin: position, size: size), display: true)
     }
 
-    private func showPanel() {
+    @objc private func reloadUsage() {
+        if !self.panel.isVisible { self.panel.orderFrontRegardless() }
         self.refreshTask?.cancel()
-        self.status = "Loading usage…"
-        self.rawSnapshot = ""
-        self.updatePage()
-        self.panel.orderFrontRegardless()
-        self.visibilityItem.title = "Hide Widget"
+        if self.rawSnapshot.isEmpty { self.publish(snapshot: "", status: "Loading usage…") }
         self.refreshTask = Task { [weak self, feed = self.feed] in
             while !Task.isCancelled {
+                let delay: Duration
                 do {
                     let snapshot = try await feed.snapshot()
                     guard !Task.isCancelled else { return }
                     self?.publish(snapshot: snapshot, status: "")
+                    delay = .seconds(60)
                 } catch {
                     guard !Task.isCancelled else { return }
                     self?.publish(snapshot: "", status: error.localizedDescription)
+                    delay = .seconds(10)
                 }
                 do {
-                    try await Task.sleep(for: .seconds(60))
+                    try await Task.sleep(for: delay)
                 } catch {
                     return
                 }
@@ -177,9 +224,8 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
             self.refreshTask?.cancel()
             self.refreshTask = nil
             self.panel.orderOut(nil)
-            self.visibilityItem.title = "Show Widget"
         } else {
-            self.showPanel()
+            self.reloadUsage()
         }
     }
 
@@ -202,6 +248,7 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
                ids.allSatisfy({ $0.range(of: "^[a-z0-9][a-z0-9_-]*$", options: .regularExpression) != nil })
             {
                 self.providerIDs = ids
+                self.cardCount = ids.count
                 self.defaults.set(ids, forKey: "ProviderIDs")
                 self.placePanel(at: self.panel.frame.origin)
                 self.updatePage()
@@ -219,12 +266,21 @@ final class FloatingWidget: NSObject, NSApplicationDelegate, NSWindowDelegate, W
 
     private func updatePage() {
         guard self.webReady else { return }
+        self.pageUpdate += 1
+        let pageUpdate = self.pageUpdate
         // Pass values as arguments so provider text never becomes JavaScript source.
         self.webView.callAsyncJavaScript(
-            "window.updateWidget(snapshot, providerIDs, status)",
+            "return window.updateWidget(snapshot, providerIDs, status)",
             arguments: ["snapshot": self.rawSnapshot, "providerIDs": self.providerIDs, "status": self.status],
             in: nil,
-            in: .page,
-            completionHandler: nil)
+            in: .page)
+        { [weak self] result in
+            guard let self, self.webReady, self.pageUpdate == pageUpdate,
+                  case let .success(value) = result,
+                  let count = value as? Int, count > 0, count != self.cardCount
+            else { return }
+            self.cardCount = count
+            self.placePanel(at: self.panel.frame.origin)
+        }
     }
 }

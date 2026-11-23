@@ -18,7 +18,9 @@ function element<K extends keyof HTMLElementTagNameMap>(
 function renderCard(card: ProviderCard, now: number): HTMLElement {
   const panel = element("section", "card");
   panel.style.setProperty("--accent", card.accent);
-  panel.append(element("h2", "provider", card.name));
+  const heading = element("h2", "provider", card.name);
+  if (card.family) heading.append(" ", element("span", "provider-family", card.family));
+  panel.append(heading);
 
   if (card.rows.length === 0) {
     panel.append(element("p", "empty", card.status));
@@ -28,14 +30,17 @@ function renderCard(card: ProviderCard, now: number): HTMLElement {
   for (const row of card.rows) {
     const quota = element("div", "quota");
     const caption = element("div", "caption");
-    const used = row.usedPercent === null ? "—" : `${Math.round(row.usedPercent)}%`;
+    const percent = row.displayPercent === null ? "—" : `${Math.round(row.displayPercent)}%`;
+    const percentage = element("span", "percentage", percent);
+    if (row.displayPercent !== null)
+      percentage.append(element("span", "quota-mode", card.showUsed ? " used" : " left"));
     const name = element("span", "label", row.label);
     name.title = row.label;
-    caption.append(element("span", "percentage", used), name);
+    caption.append(percentage, name);
 
     const track = element("div", "track");
     const fill = element("div", "fill");
-    fill.style.width = `${row.usedPercent ?? 0}%`;
+    fill.style.width = `${row.displayPercent ?? 0}%`;
     if (row.usedPercent !== null && row.usedPercent >= 90) fill.classList.add("limit");
     const reset = resetCountdown(row.resetAt, now);
     const countdown = element("span", "countdown", reset);
@@ -53,19 +58,20 @@ function renderCard(card: ProviderCard, now: number): HTMLElement {
   return panel;
 }
 
-function renderWidget(): void {
+function renderWidget(): number {
   const now = Date.now();
   const cards = message ? null : makeCards(snapshot, providerIDs, now);
   if (cards) {
     cardsElement.style.setProperty("--columns", String(cards.length));
     cardsElement.replaceChildren(...cards.map((card) => renderCard(card, now)));
-  } else {
-    cardsElement.style.setProperty("--columns", "1");
-    cardsElement.replaceChildren(element("p", "empty notice", message || "Usage feed is incompatible"));
+    return cards.length;
   }
+  cardsElement.style.setProperty("--columns", "1");
+  cardsElement.replaceChildren(element("p", "empty notice", message || "Usage feed is incompatible"));
+  return 0;
 }
 
-function updateWidget(raw: string, ids: string[], status: string): void {
+function updateWidget(raw: string, ids: string[], status: string): number {
   providerIDs = ids;
   message = status;
   try {
@@ -73,7 +79,7 @@ function updateWidget(raw: string, ids: string[], status: string): void {
   } catch {
     snapshot = null;
   }
-  renderWidget();
+  return renderWidget();
 }
 
 renderWidget();

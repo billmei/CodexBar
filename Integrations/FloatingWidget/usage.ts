@@ -1,16 +1,24 @@
 interface WindowReading {
   label: string;
   usedPercent: number | null;
+  displayPercent: number | null;
   resetAt: number | null;
 }
 
 interface ProviderCard {
   name: string;
+  family?: string;
   accent: string;
+  showUsed: boolean;
   rows: WindowReading[];
   extraRows: number;
   stale: boolean;
   status: string;
+}
+
+interface CardWindows {
+  family?: string;
+  windows: Record<string, unknown>[];
 }
 
 const providerColors: Readonly<Record<string, string>> = {
@@ -48,23 +56,70 @@ function resetCountdown(resetAt: number | null, now: number): string {
   return `${minutes}m`;
 }
 
-function quotaRow(raw: unknown): WindowReading | null {
-  const row = object(raw);
-  if (!row || row.idle === true) return null;
-  const reported = row.usedPercent;
-  const usedPercent =
-    typeof reported === "number" && Number.isFinite(reported) ? Math.min(100, Math.max(0, reported)) : null;
+function finitePercent(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : null;
+}
+
+function quotaRow(row: Record<string, unknown>, showUsed: boolean, providerID: string): WindowReading {
+  const reportedUsed = finitePercent(row.usedPercent);
+  const reportedRemaining = finitePercent(row.remainingPercent);
+  const usedPercent = reportedUsed ?? (reportedRemaining === null ? null : 100 - reportedRemaining);
+  const remainingPercent = reportedRemaining ?? (usedPercent === null ? null : 100 - usedPercent);
   const name = label(row.label, "Usage");
+  const fiveHourSession = name === "Session" && (providerID === "claude" || providerID === "codex");
   return {
-    label: name === "Weekly" ? "Week" : name,
+    label: fiveHourSession ? "5-Hour" : name === "Weekly" ? "Week" : name,
     usedPercent,
+    displayPercent: showUsed ? usedPercent : remainingPercent,
     resetAt: timestamp(row.resetAt),
   };
+}
+
+function visibleWindows(windows: Record<string, unknown>[]): CardWindows {
+  return { windows: windows.filter((window) => window.idle !== true) };
+}
+
+function antigravityCardWindows(windows: Record<string, unknown>[]): CardWindows[] {
+  const gemini: { window: Record<string, unknown>; label: string }[] = [];
+  const claude: Record<string, unknown>[] = [];
+  const other: Record<string, unknown>[] = [];
+  const prefix = "antigravity-quota-summary-";
+
+  for (const window of windows) {
+    const kind = label(window.kind, "").toLowerCase();
+    const bucket = kind.startsWith(prefix) ? kind.slice(prefix.length) : "";
+    const title = label(window.label, "").toLowerCase();
+    const cadence =
+      / (5-hour|weekly)$/.exec(title)?.[1] ?? /-(weekly|5h|5-hour|session|five-hour|five hour)$/.exec(bucket)?.[1];
+    const geminiBucket = /^gemini-(weekly|5h|5-hour|session|five-hour|five hour)$/.test(bucket);
+    const claudeBucket = /(?:^|-)(3p|third-party)(?:-|$)/.test(bucket);
+    const cadenceLabel = cadence === "weekly" ? "Weekly" : "5-Hour";
+    if (bucket && cadence && !claudeBucket && (geminiBucket || /^gemini (5-hour|weekly)$/.test(title))) {
+      gemini.push({ window, label: cadenceLabel });
+    } else if (bucket && cadence && !bucket.includes("gemini") && (claudeBucket || /\b(claude|gpt)\b/.test(title))) {
+      claude.push({ ...window, label: cadenceLabel });
+    } else if (window.idle !== true) {
+      other.push(window);
+    }
+  }
+
+  if (claude.length === 0) return [visibleWindows(windows)];
+
+  // Both tracked families are useful at zero usage, including their reset times.
+  claude.sort((a, b) => Number(a.label === "Weekly") - Number(b.label === "Weekly"));
+  const geminiFillsCard = gemini.length >= 2 || (gemini.length === 1 && other.length === 0);
+  const standard: CardWindows = {
+    family: geminiFillsCard ? "Gemini" : undefined,
+    windows: [...gemini.map(({ window, label }) => (geminiFillsCard ? { ...window, label } : window)), ...other],
+  };
+  const thirdParty = { family: "Claude / GPT", windows: claude };
+  return standard.windows.length ? [standard, thirdParty] : [thirdParty];
 }
 
 function makeCards(snapshot: unknown, providerIDs: string[], now: number): ProviderCard[] | null {
   const root = object(snapshot);
   if (!root || root.schemaVersion !== 1 || !Array.isArray(root.providers)) return null;
+  const showUsed = object(root.host)?.usageBarsShowUsed === true;
 
   const timeout = root.staleAfterSeconds;
   const maxAge = (typeof timeout === "number" && timeout > 0 ? timeout : 180) * 1_000;
@@ -76,28 +131,32 @@ function makeCards(snapshot: unknown, providerIDs: string[], now: number): Provi
     }),
   );
 
-  return providerIDs.map((id) => {
+  return providerIDs.flatMap((id) => {
     const provider = providers.get(id);
-    const rows =
+    const windows =
       provider?.enabled === true && Array.isArray(provider.windows)
         ? provider.windows.flatMap((raw: unknown) => {
-            const row = quotaRow(raw);
-            return row ? [row] : [];
+            const window = object(raw);
+            return window ? [window] : [];
           })
         : [];
     const measured = timestamp(provider?.updatedAt) ?? generated;
-    const accent = object(provider?.display)?.accentColor;
-    return {
+    const providedAccent = object(provider?.display)?.accentColor;
+    const accent = Object.hasOwn(providerColors, id)
+      ? providerColors[id]
+      : typeof providedAccent === "string" && /^#[0-9a-f]{6}$/i.test(providedAccent)
+        ? providedAccent
+        : "#8da4ee";
+    const groups = id === "antigravity" ? antigravityCardWindows(windows) : [visibleWindows(windows)];
+    return groups.map(({ family, windows }) => ({
       name: label(provider?.name, id),
-      accent: Object.hasOwn(providerColors, id)
-        ? providerColors[id]
-        : typeof accent === "string" && /^#[0-9a-f]{6}$/i.test(accent)
-          ? accent
-          : "#8da4ee",
-      rows: rows.slice(0, 2),
-      extraRows: Math.max(0, rows.length - 2),
-      stale: rows.length > 0 && (measured === null || now - measured > maxAge || !!provider?.error),
+      family,
+      showUsed,
+      accent,
+      rows: windows.slice(0, 2).map((window) => quotaRow(window, showUsed, id)),
+      extraRows: Math.max(0, windows.length - 2),
+      stale: windows.length > 0 && (measured === null || now - measured > maxAge || !!provider?.error),
       status: provider?.enabled === true ? "Usage unavailable" : "Provider unavailable",
-    };
+    }));
   });
 }

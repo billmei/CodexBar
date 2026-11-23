@@ -59,6 +59,18 @@ body {
   white-space: nowrap;
 }
 
+.provider-family {
+  display: block;
+  color: #b5adbe;
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+}
+
+#cards:has(.provider-family) .provider {
+  min-height: 26px;
+}
+
 .quota + .quota {
   margin-top: 6px;
 }
@@ -77,6 +89,11 @@ body {
 
 .percentage {
   flex-shrink: 0;
+}
+
+.quota-mode {
+  color: #b5adbe;
+  font-size: 9px;
 }
 
 .label {

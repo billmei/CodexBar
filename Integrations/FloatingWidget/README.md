@@ -2,10 +2,12 @@
 
 Keep compact usage cards over your work while another app has focus. The panel joins
 your Spaces and can appear alongside full-screen apps. Each card shows the first two
-visible quota windows, the percentage used, and time until reset. It starts with
-Claude, Codex, and Antigravity.
+visible quota windows, a percentage, and time until reset. Bars and percentages
+follow CodexBar's **Usage bars fill** setting. It starts with Claude, Codex, and
+Antigravity. When Antigravity reports its Claude/GPT quota windows, they get a
+separate card for the 5-hour and weekly limits, including at zero usage.
 
-<img src="preview.png" alt="Sample usage cards for Claude, Codex, and Antigravity" width="448" />
+<img src="preview.png" alt="Sample cards for Claude, Codex, Antigravity Gemini, and Antigravity Claude/GPT" width="596" />
 
 The companion uses TypeScript for the widget and AppKit for the floating panel.
 Install it as a separate macOS app. CodexBar's **Settings → Plugins** installs
@@ -34,8 +36,14 @@ quit it and move **CodexBar Floating Widget.app** from `~/Applications` to the T
 ## Use the widget
 
 - Drag the handle along the top of the panel. The app remembers its position.
-- Click the chart icon in the menu bar to **Hide Widget**, **Show Widget**, or
-  **Quit Floating Widget**. Hidden widgets pause their usage requests.
+- Right-click or Control-click the widget, or click the chart icon in the menu bar,
+  to open its controls. Choose **Reload Usage** to check the server immediately.
+  If the server is unavailable, the widget retries every ten seconds after each
+  failed request.
+- Choose **Hide Menu Bar Icon** to keep only the widget, or **Show Menu Bar Icon**
+  from the widget's menu to bring it back. The setting is saved across launches.
+- **Hide Widget** pauses its usage requests. If both the widget and the icon are
+  hidden, open **CodexBar Floating Widget.app** again to show the panel.
 - Choose **Choose Providers…** in the same menu and enter one to three provider IDs
   in the order you want. See the [provider IDs](../../docs/provider-ids.md).
 - Keep CodexBar running. The widget requests a new dashboard snapshot roughly once
