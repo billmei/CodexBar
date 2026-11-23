@@ -35,6 +35,9 @@ Requires macOS 14+ (Sonoma). Download from [GitHub Releases](https://github.com/
 brew install --cask codexbar
 ```
 
+For usage cards that stay visible over other apps, install the
+[CodexBar Floating Widget companion](Integrations/FloatingWidget/README.md).
+
 ### Linux desktop and Omarchy
 
 The Qt 6 desktop app supports Wayland and X11, with an optional Omarchy widget.

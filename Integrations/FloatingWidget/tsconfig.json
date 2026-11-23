@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": []
+  },
+  "files": ["usage.ts", "widget.ts"]
+}
