@@ -2,8 +2,9 @@
 
 Keep compact usage cards over your work while another app has focus. The panel joins
 your Spaces and can appear alongside full-screen apps. Each card shows the first two
-visible quota windows, a percentage, and time until reset. Bars and percentages
-follow CodexBar's **Usage bars fill** setting. It starts with Claude, Codex, and
+visible quota windows with their time until reset, above a bar labeled with the
+quota percentage. Bars and percentages follow CodexBar's **Usage bars fill** setting,
+so they count quota left or quota used. It starts with Claude, Codex, and
 Antigravity. When Antigravity reports its Claude/GPT quota windows, they get a
 separate card for the 5-hour and weekly limits, including at zero usage.
 

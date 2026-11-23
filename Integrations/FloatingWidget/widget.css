@@ -67,7 +67,7 @@ body {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 7px;
+  gap: 4px;
   min-width: 0;
   margin: 0 0 3px;
   font-size: 12px;
@@ -75,19 +75,21 @@ body {
   white-space: nowrap;
 }
 
-.percentage {
-  flex-shrink: 0;
-}
-
-.quota-mode {
-  color: #b5adbe;
-  font-size: 9px;
-}
-
 .label {
   overflow: hidden;
   color: #b5adbe;
   text-overflow: ellipsis;
+}
+
+.countdown {
+  flex-shrink: 0;
+}
+
+/* Attach the colon to the countdown so it survives a truncated label. */
+.countdown::before {
+  content: ":";
+  margin: 0 4px 0 -4px;
+  color: #b5adbe;
 }
 
 .track {
@@ -108,7 +110,7 @@ body {
   background: #fb5b60;
 }
 
-.countdown {
+.percentage {
   position: absolute;
   inset: 0;
   display: grid;

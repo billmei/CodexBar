@@ -30,22 +30,24 @@ function renderCard(card: ProviderCard, now: number): HTMLElement {
   for (const row of card.rows) {
     const quota = element("div", "quota");
     const caption = element("div", "caption");
-    const percent = row.displayPercent === null ? "—" : `${Math.round(row.displayPercent)}%`;
-    const percentage = element("span", "percentage", percent);
-    if (row.displayPercent !== null)
-      percentage.append(element("span", "quota-mode", card.showUsed ? " used" : " left"));
     const name = element("span", "label", row.label);
     name.title = row.label;
-    caption.append(percentage, name);
+    const reset = resetCountdown(row.resetAt, now);
+    const countdown = element("span", "countdown", reset);
+    countdown.setAttribute("aria-label", row.resetAt === null ? "Reset time unavailable" : `Reset: ${reset}`);
+    caption.append(name, countdown);
 
     const track = element("div", "track");
     const fill = element("div", "fill");
     fill.style.width = `${row.displayPercent ?? 0}%`;
     if (row.usedPercent !== null && row.usedPercent >= 90) fill.classList.add("limit");
-    const reset = resetCountdown(row.resetAt, now);
-    const countdown = element("span", "countdown", reset);
-    countdown.setAttribute("aria-label", row.resetAt === null ? "Reset time unavailable" : `Reset: ${reset}`);
-    track.append(fill, countdown);
+    const percent = row.displayPercent === null ? "—" : `${Math.round(row.displayPercent)}%`;
+    const percentage = element("span", "percentage", percent);
+    percentage.setAttribute(
+      "aria-label",
+      row.displayPercent === null ? "Usage unavailable" : `${percent} ${card.showUsed ? "used" : "left"}`,
+    );
+    track.append(fill, percentage);
 
     quota.append(caption, track);
     panel.append(quota);
