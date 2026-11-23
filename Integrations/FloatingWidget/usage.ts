@@ -24,7 +24,7 @@ interface CardWindows {
 const providerColors: Readonly<Record<string, string>> = {
   claude: "#e58360",
   codex: "#29d898",
-  antigravity: "#a782ff",
+  antigravity: "#2f71e4",
 };
 
 function object(value: unknown): Record<string, unknown> | undefined {
